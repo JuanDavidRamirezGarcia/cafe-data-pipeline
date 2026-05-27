@@ -1,0 +1,7 @@
+fecha,cliente,tipo_cafe,cantidad,precio_usd
+2026-05-25,Juan Perez,Espresso,2,3.50
+2026-05-25,Luisa Gomez, Cappuccino ,1,4.50
+2026-05-25,,Latte,1,4.00
+2026-05-26,Carlos Ruiz,Espresso,-1,3.50
+2026-05-26,Marta Gomez,Filtrado,3,3.00
+2026-05-26,Anónimo,  Mochaccino ,2,4.80
