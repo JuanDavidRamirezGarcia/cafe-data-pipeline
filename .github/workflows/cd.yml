@@ -1,0 +1,49 @@
+name: "CD - Publicar Dashboard en Internet"
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  desplegar_dashboard:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: "1. Descargar codigo"
+        uses: actions/checkout@v4
+
+      - name: "2. Configurar Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: "3. Instalar dependencias"
+        run: pip install -r requirements.txt
+
+      - name: "4. Ejecutar Pipeline en Produccion"
+        env:
+          APP_ENV: production
+        run: python src/pipeline.py
+
+      - name: "5. Generar Pagina Web del Dashboard"
+        run: python src/dashboard.py
+
+      - name: "6. Configurar GitHub Pages"
+        uses: actions/configure-pages@v5
+
+      - name: "7. Subir la carpeta output a la nube"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'output'
+
+      - name: "8. Publicar en Internet 🚀"
+        id: deployment
+        uses: actions/deploy-pages@v4
